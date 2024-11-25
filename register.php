@@ -32,8 +32,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
+    if (!preg_match('/^[a-zA-Z0-9_]+$/', $input_username)) {
+        $_SESSION['message'] = "Username can only contain letters, numbers, and underscores";
+        header("Location: register.php");
+        exit();
+    }
+
     if (strlen($input_password) < 8) {
         $_SESSION['message'] = "Password must be at least 8 characters";
+        header("Location: register.php");
+        exit();
+    }
+
+    if (strlen($input_password) > 32) {
+        $_SESSION['message'] = "Password must be at most 32 characters";
         header("Location: register.php");
         exit();
     }
@@ -42,11 +54,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['message'] = "Username must be at least 4 characters";
         header("Location: register.php");
         exit();
-    }
-    
+    } 
 
     try {
-        $con = require 'database.php';
+        $con = require_once 'database.php';
     } catch (Throwable $th) {
         $_SESSION['message'] = "Server is down";
         header("Location: register.php");

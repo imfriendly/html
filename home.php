@@ -32,13 +32,13 @@ $_SESSION['date_expired'] = $date_expired;
 </head>
 <body>
     <header>
-        <h3>Hello <?php echo $_SESSION['username']; ?></h3>
+        <h3>Hello <?php echo htmlspecialchars($_SESSION['username']); ?></h3>
 
         <div style="position:absolute;top:10px;right:10px;color:paleturquoise">
             <?php
             // Assuming you have the date_expired stored in the session
             if (isset($_SESSION['date_expired'])) {
-                echo "Expires on: " . $_SESSION['date_expired'];
+                echo "Expires on: " . htmlspecialchars($_SESSION['date_expired']);
             } else {
                 echo "No expiration date set.";
             }
